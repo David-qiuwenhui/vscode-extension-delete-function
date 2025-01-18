@@ -55,8 +55,26 @@ export function getFunctionNode(
           };
         }
       }
+    },
 
-      getName();
+    FunctionExpression(path) {
+      const variableDeclarationPath = path.parentPath.parentPath;
+      function getName() {
+        return Object.keys(path.parentPath.getBindingIdentifiers())[0];
+      }
+
+      if (variableDeclarationPath?.isVariableDeclaration()) {
+        if (
+          index >= variableDeclarationPath?.node?.start! &&
+          index <= variableDeclarationPath?.node?.end!
+        ) {
+          functionNode = {
+            name: getName(),
+            start: variableDeclarationPath.node.loc?.start,
+            end: variableDeclarationPath.node.loc?.end,
+          };
+        }
+      }
     },
   });
 

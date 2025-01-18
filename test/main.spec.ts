@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import { getFunctionNode } from "../src/main.ts";
-test("function", () => {
+test("FunctionDeclaration", () => {
   const code = `
     function getName() {
         return "name";
@@ -46,6 +46,32 @@ test("arrow function expression", () => {
       line: 2,
       column: 37,
       index: 38,
+    },
+  });
+});
+
+test("VariableDeclaration", () => {
+  const code = `
+    const getNameD = function () { 
+      return "getNameD"
+    }
+    const getName = () => "heiheihei"
+    const setNameA = () => "heiheihei"
+  `;
+  const index = 10;
+  const functionNode = getFunctionNode(code, index);
+
+  expect(functionNode).toEqual({
+    name: "getNameD",
+    start: {
+      line: 2,
+      column: 4,
+      index: 5,
+    },
+    end: {
+      column: 5,
+      index: 66,
+      line: 4,
     },
   });
 });
