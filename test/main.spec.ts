@@ -26,3 +26,26 @@ test("function", () => {
     },
   });
 });
+
+test("arrow function expression", () => {
+  const code = `
+    const getName = () => "heiheihei"
+    const setNameA = () => "heiheihei"
+  `;
+  const index = 10;
+  const functionNode = getFunctionNode(code, index);
+
+  expect(functionNode).toEqual({
+    name: "getName",
+    start: {
+      line: 2,
+      column: 4,
+      index: 5,
+    },
+    end: {
+      line: 2,
+      column: 37,
+      index: 38,
+    },
+  });
+});
